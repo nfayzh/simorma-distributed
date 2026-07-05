@@ -1,0 +1,19 @@
+# Environment
+.env
+
+# Docker volumes (local bind mounts, jika ada)
+pgdata/
+mongodata/
+redisdata/
+
+# Logs
+*.log
+logs/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/

@@ -1,0 +1,121 @@
+
+
+services:
+  # NODE 1: KEMAHASISWAAN (MASTER)
+  node1-kemahasiswaan:
+    image: postgres:15
+    container_name: doms-node1-kemahasiswaan
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${PG_NODE1_DB}
+      POSTGRES_USER: ${PG_NODE1_USER}
+      POSTGRES_PASSWORD: ${PG_NODE1_PASSWORD}
+    ports:
+      - "${PG_NODE1_PORT}:5432"
+    volumes:
+      - node1_data:/var/lib/postgresql/data
+      - ./docker/postgres/postgresql-master.conf:/etc/postgresql/postgresql.conf
+      - ./docker/postgres/pg_hba.conf:/etc/postgresql/pg_hba.conf
+    command: ["postgres", "-c", "config_file=/etc/postgresql/postgresql.conf", "-c", "hba_file=/etc/postgresql/pg_hba.conf"]
+    networks:
+      - doms-network
+
+  # NODE 2: BEM
+  node2-bem:
+    image: postgres:15
+    container_name: doms-node2-bem
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${PG_NODE2_DB}
+      POSTGRES_USER: ${PG_NODE2_USER}
+      POSTGRES_PASSWORD: ${PG_NODE2_PASSWORD}
+    ports:
+      - "${PG_NODE2_PORT}:5432"
+    volumes:
+      - node2_data:/var/lib/postgresql/data
+      - ./docker/postgres/postgresql-node.conf:/etc/postgresql/postgresql.conf
+      - ./docker/postgres/pg_hba.conf:/etc/postgresql/pg_hba.conf
+    command: ["postgres", "-c", "config_file=/etc/postgresql/postgresql.conf", "-c", "hba_file=/etc/postgresql/pg_hba.conf"]
+    networks:
+      - doms-network
+
+  # NODE 3: HIMA
+  node3-hima:
+    image: postgres:15
+    container_name: doms-node3-hima
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${PG_NODE3_DB}
+      POSTGRES_USER: ${PG_NODE3_USER}
+      POSTGRES_PASSWORD: ${PG_NODE3_PASSWORD}
+    ports:
+      - "${PG_NODE3_PORT}:5432"
+    volumes:
+      - node3_data:/var/lib/postgresql/data
+      - ./docker/postgres/postgresql-node.conf:/etc/postgresql/postgresql.conf
+      - ./docker/postgres/pg_hba.conf:/etc/postgresql/pg_hba.conf
+    command: ["postgres", "-c", "config_file=/etc/postgresql/postgresql.conf", "-c", "hba_file=/etc/postgresql/pg_hba.conf"]
+    networks:
+      - doms-network
+
+  # NODE 4: UKM
+  node4-ukm:
+    image: postgres:15
+    container_name: doms-node4-ukm
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${PG_NODE4_DB}
+      POSTGRES_USER: ${PG_NODE4_USER}
+      POSTGRES_PASSWORD: ${PG_NODE4_PASSWORD}
+    ports:
+      - "${PG_NODE4_PORT}:5432"
+    volumes:
+      - node4_data:/var/lib/postgresql/data
+      - ./docker/postgres/postgresql-node.conf:/etc/postgresql/postgresql.conf
+      - ./docker/postgres/pg_hba.conf:/etc/postgresql/pg_hba.conf
+    command: ["postgres", "-c", "config_file=/etc/postgresql/postgresql.conf", "-c", "hba_file=/etc/postgresql/pg_hba.conf"]
+    networks:
+      - doms-network
+
+  # REDIS
+  redis:
+    image: redis:7-alpine
+    container_name: doms-redis
+    restart: unless-stopped
+    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
+    ports:
+      - "${REDIS_PORT}:6379"
+    volumes:
+      - ./redis/redis.conf:/usr/local/etc/redis/redis.conf
+      - redis_data:/data
+    networks:
+      - doms-network
+
+  # MONGODB
+  mongo:
+    image: mongo:4.4
+    container_name: doms-mongo
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+      MONGO_INITDB_DATABASE: ${MONGO_DB}
+    ports:
+      - "${MONGO_PORT}:27017"
+    volumes:
+      - mongo_data:/data/db
+      - ./mongodb/init.js:/docker-entrypoint-initdb.d/init.js:ro
+    networks:
+      - doms-network
+
+networks:
+  doms-network:
+    driver: bridge
+
+volumes:
+  node1_data:
+  node2_data:
+  node3_data:
+  node4_data:
+  redis_data:
+  mongo_data:
