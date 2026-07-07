@@ -28,7 +28,7 @@ CREATE FOREIGN TABLE IF NOT EXISTS foreign_letter_hima (
     letter_type_id   UUID,
     title            VARCHAR(200),
     description      TEXT,
-    status           TEXT,
+    status           letter_status_enum,
     created_at       TIMESTAMP,
     updated_at       TIMESTAMP
 ) SERVER server_hima_remote OPTIONS (schema_name 'public', table_name 'letter_hima');
@@ -39,7 +39,7 @@ CREATE FOREIGN TABLE IF NOT EXISTS foreign_letter_ukm (
     letter_type_id   UUID,
     title            VARCHAR(200),
     description      TEXT,
-    status           TEXT,
+    status           letter_status_enum,
     created_at       TIMESTAMP,
     updated_at       TIMESTAMP
 ) SERVER server_ukm_remote OPTIONS (schema_name 'public', table_name 'letter_ukm');

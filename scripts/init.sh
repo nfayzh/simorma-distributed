@@ -120,15 +120,16 @@ echo "[7/8] Setup FDW (server, user mapping, grant, foreign table) di Node 1..."
 run_sql doms-node2-bem "${PG_NODE2_DB}" "${PG_NODE2_USER}" database/fdw/02_grant_fdw_reader.sql
 run_sql doms-node1-kemahasiswaan "${PG_NODE1_DB}" "${PG_NODE1_USER}" database/fdw/01_setup_fdw_server.sql
 run_sql doms-node1-kemahasiswaan "${PG_NODE1_DB}" "${PG_NODE1_USER}" database/fdw/03_create_foreign_tables.sql
-run_sql doms-node1-kemahasiswaan "${PG_NODE1_DB}" "${PG_NODE1_USER}" database/fdw/04_view_monitoring.sql
+
 echo ""
 echo "[7b] Setup FDW tambahan: BEM -> HIMA & UKM (real-time perantara)..."
 run_sql doms-node3-hima "${PG_NODE3_DB}" "${PG_NODE3_USER}" database/fdw/05_grant_fdw_reader_hima.sql
 run_sql doms-node4-ukm "${PG_NODE4_DB}" "${PG_NODE4_USER}" database/fdw/06_grant_fdw_reader_ukm.sql
 run_sql doms-node2-bem "${PG_NODE2_DB}" "${PG_NODE2_USER}" database/fdw/07_setup_bem_fdw_server.sql
+run_sql doms-node2-bem "${PG_NODE2_DB}" "${PG_NODE2_USER}" database/fdw/10_view_letter_masuk_bem.sql
 run_sql doms-node2-bem "${PG_NODE2_DB}" "${PG_NODE2_USER}" database/fdw/08_grant_fdw_reader_bem_proposal.sql
 run_sql doms-node1-kemahasiswaan "${PG_NODE1_DB}" "${PG_NODE1_USER}" database/fdw/09_create_foreign_table_proposal_bem.sql
-
+run_sql doms-node1-kemahasiswaan "${PG_NODE1_DB}" "${PG_NODE1_USER}" database/fdw/04_view_monitoring.sql
 
 echo ""
 echo "[8/8] Setup fragmentasi (opsional demo)..."
